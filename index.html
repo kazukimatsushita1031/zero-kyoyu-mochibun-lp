@@ -1349,7 +1349,7 @@ textarea.input{min-height:110px;resize:vertical}
   document.getElementById('toStep1').addEventListener('click', function(){ goStep(1); });
   // ---- 反響の送信先（Google Apps Script のウェブアプリURL）----
   // 設定手順は「反響通知_設定手順.md」を参照。空のままだと送信せず完了画面だけ表示します。
-  var LEAD_ENDPOINT = '';
+  var LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzZK3Mzp2m9mvXmUdSMPBlByI09ch_vPZ8Y6LgeQfCfjpydzQMTxUdN6oJD1pcb1HO80Q/exec';
 
   // 広告の流入元（utm / gclid）を記録しておき、反響と一緒に送る
   var ATTR_KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','yclid','fbclid'];
