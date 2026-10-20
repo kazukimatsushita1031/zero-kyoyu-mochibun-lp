@@ -1474,6 +1474,8 @@ textarea.input{min-height:110px;resize:vertical}
 
   var submitBtn = form.querySelector('button[type="submit"]');
   var sendErr = document.getElementById('sendErr');
+  // 送信完了後はサンクスページ（thanks.html）へ移動する。計測（GTM/GA4）はサンクスページの表示で取る想定。
+  function goThanks(){ window.location.href = 'thanks.html'; }
   function showDone(){
     s2.hidden = true;
     document.querySelector('.form-head').style.display = 'none';
@@ -1491,13 +1493,13 @@ textarea.input{min-height:110px;resize:vertical}
       page: location.href.split('#')[0], ua: navigator.userAgent };
     ATTR_KEYS.concat(['landing','referrer']).forEach(function(k){ data[k] = attr[k] || ''; });
 
-    if(!LEAD_ENDPOINT){ track('form_complete', {pref: data.pref, ptype: data.ptype}); showDone(); return; }
+    if(!LEAD_ENDPOINT){ track('form_complete', {pref: data.pref, ptype: data.ptype}); goThanks(); return; }
 
     submitBtn.disabled = true; submitBtn.style.opacity = '.6';
     var label = submitBtn.firstChild.nodeValue; submitBtn.firstChild.nodeValue = '送信しています…';
     if(sendErr) sendErr.hidden = true;
     fetch(LEAD_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
-      .then(function(){ track('form_complete', {pref: data.pref, ptype: data.ptype}); showDone(); })
+      .then(function(){ track('form_complete', {pref: data.pref, ptype: data.ptype}); goThanks(); })
       .catch(function(){
         submitBtn.disabled = false; submitBtn.style.opacity = ''; submitBtn.firstChild.nodeValue = label;
         if(sendErr){ sendErr.hidden = false; sendErr.focus(); }
